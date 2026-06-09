@@ -58,7 +58,7 @@ def main():
     
     # Check for API key
     if not st.secrets.get("GEMINI_API_KEY") and not os.environ.get("GEMINI_API_KEY"):
-        st.warning("⚠️ Gemini API Key not found. Please set GEMINI_API_KEY in .streamlit/secrets.toml")
+        st.warning("⚠️ Gemini API Key nicht gefunden. Bitte setze GEMINI_API_KEY in den Streamlit Cloud Secrets (Dashboard > App > Settings > Secrets) oder lokal in .streamlit/secrets.toml.")
         
     # High-visibility warning if pre-filled
     if st.session_state.prefilled:
@@ -123,25 +123,28 @@ def step_options():
         for idx, (col, tmpl) in enumerate(zip([col_a, col_b, col_c], templates)):
             is_selected = st.session_state.user_data['options']['template'] == tmpl["key"]
             with col:
-                border_style = f"3px solid #4CAF50" if is_selected else f"1px solid {tmpl['border_color']}"
-                bg_accent = tmpl["color"]
-                fg_accent = tmpl["text_color"]
+                border_style = "3px solid #4CAF50" if is_selected else f"1px solid {tmpl['border_color']}"
                 
-                st.markdown(f"""
-                <div style="border: {border_style}; border-radius: 10px; padding: 0; text-align: center; 
-                            background: white; margin-bottom: 6px; overflow: hidden; 
-                            box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                    <div style="height: 100px; background: {bg_accent}; display: flex; align-items: center; 
-                                justify-content: center; font-size: 32px; color: {fg_accent};">
-                        {tmpl['badge']}
-                    </div>
-                    <div style="padding: 10px 8px;">
-                        <div style="font-weight: bold; font-size: 13px; color: #222;">{tmpl['name']}</div>
-                        <div style="font-size: 11px; color: #666; margin-top: 4px;">{tmpl['desc']}</div>
-                        { '✅ <div style="color: #2e7d32; font-size: 12px; font-weight: bold; margin-top: 6px; border: 1px solid #2e7d32; border-radius: 4px; padding: 2px 0;">Ausgewählt</div>' if is_selected else '' }
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+                badge_html = ""
+                if is_selected:
+                    badge_html = '<div style="color:#2e7d32;font-size:12px;font-weight:bold;margin-top:6px;border:1px solid #2e7d32;border-radius:4px;padding:2px 0;">Ausgewählt</div>'
+                
+                card_html = (
+                    '<div style="border:' + border_style + ';border-radius:10px;padding:0;text-align:center;'
+                    'background:white;margin-bottom:6px;overflow:hidden;'
+                    'box-shadow:0 2px 8px rgba(0,0,0,0.08);">'
+                    '<div style="height:100px;background:' + tmpl['color'] + ';display:flex;align-items:center;'
+                    'justify-content:center;font-size:32px;color:' + tmpl['text_color'] + ';">'
+                    + tmpl['badge'] +
+                    '</div>'
+                    '<div style="padding:10px 8px;">'
+                    '<div style="font-weight:bold;font-size:13px;color:#222;">' + tmpl['name'] + '</div>'
+                    '<div style="font-size:11px;color:#666;margin-top:4px;">' + tmpl['desc'] + '</div>'
+                    + badge_html +
+                    '</div>'
+                    '</div>'
+                )
+                st.components.v1.html(card_html, height=180)
                 
                 if st.button(f"Select {tmpl['name']}", key=f"tmpl_btn_{idx}", use_container_width=True):
                     st.session_state.user_data['options']['template'] = tmpl["key"]

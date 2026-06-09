@@ -1,11 +1,8 @@
 import os
 import streamlit as st
-from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from google.genai import errors as genai_errors
-
-load_dotenv()
 
 def get_client():
     """Initializes and returns the Gemini Client."""
@@ -17,7 +14,7 @@ def get_client():
     except Exception:
         pass
         
-    # Fallback to environment variable (incl. .env file loaded via load_dotenv)
+    # Fallback to environment variable
     if not api_key:
         api_key = os.environ.get("GEMINI_API_KEY")
         
