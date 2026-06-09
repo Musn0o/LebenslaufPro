@@ -12,12 +12,18 @@ ENV/
 # Streamlit
 .streamlit/secrets.toml
 
+# Environment files
+.env
+
 # Typst and PDF output
 *.pdf
 *.log
 *.aux
 *.out
 temp_files/
+*.png
+*.jpg
+*.jpeg
 
 # IDEs
 .idea/

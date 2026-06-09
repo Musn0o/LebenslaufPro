@@ -7,7 +7,7 @@
 
 #let personal = data.personal
 
-// Sender Info
+// Sender Info (right-aligned, appears once)
 #align(right)[
   #text(weight: "bold")[#personal.first_name #personal.last_name]\
   #personal.address\
@@ -17,13 +17,13 @@
 
 #v(20mm)
 
-// Receiver Info (Positioned for DIN 5008 Window)
+// Receiver Info
 #align(left)[
-  #text(size: 8pt)[#personal.first_name #personal.last_name - #personal.address - #personal.postal_code]\
-  #text(weight: "bold")[Musterfirma GmbH]\
-  Personalabteilung\
-  Musterstraße 123\
-  12345 Musterstadt
+  #text(weight: "bold")[#data.company.name]\
+  #if "contact_person" in data.company and data.company.contact_person != "" [
+    z. Hd. #data.company.contact_person\
+  ]
+  #data.company.address
 ]
 
 #v(15mm)
@@ -36,15 +36,19 @@
 #v(10mm)
 
 // Subject
-#text(weight: "bold", size: 12pt)[Bewerbung als [Position]]
+#text(weight: "bold", size: 12pt)[Bewerbung als #data.company.job_title]
 
 #v(5mm)
 
-Sehr geehrte Damen und Herren,
-
-[Hier kommt der durch die KI generierte Text für das Anschreiben hin...]
-
-Mit freundlichen Grüßen
+#if "cover_letter_text" in data [
+  #data.cover_letter_text
+] else [
+  Sehr geehrte Damen und Herren,
+  
+  [Hier kommt der durch die KI generierte Text für das Anschreiben hin...]
+  
+  Mit freundlichen Grüßen
+]
 
 #v(10mm)
 #personal.first_name #personal.last_name
