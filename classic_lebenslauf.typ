@@ -31,10 +31,10 @@
 // Helper for section titles
 #let section_title(title) = {
   block(breakable: false)[
-    v(5mm)
-    text(weight: "bold", size: 12pt, fill: rgb("333333"))[#title]
-    line(length: 100%, stroke: 0.5pt + rgb("CCCCCC"))
-    v(2mm)
+    #v(5mm)
+    #text(weight: "bold", size: 12pt, fill: rgb("333333"))[#title]
+    #line(length: 100%, stroke: 0.5pt + rgb("CCCCCC"))
+    #v(2mm)
   ]
 }
 

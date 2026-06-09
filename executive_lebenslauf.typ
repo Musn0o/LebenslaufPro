@@ -29,11 +29,11 @@
 
 #let section_title(title) = {
   block(breakable: false)[
-    v(3mm)
-    rect(fill: accent_color, width: 100%, inset: 2mm)[
+    #v(3mm)
+    #rect(fill: accent_color, width: 100%, inset: 2mm)[
       #text(weight: "bold", size: 11pt, fill: white)[#title]
     ]
-    v(2mm)
+    #v(2mm)
   ]
 }
 

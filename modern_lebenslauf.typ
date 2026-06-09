@@ -68,11 +68,11 @@
     
     #let section_title(title) = {
       block(breakable: false)[
-        v(5mm)
-        text(weight: "bold", size: 14pt, fill: primary_color)[#title]
-        v(-2mm)
-        line(length: 100%, stroke: 1.5pt + primary_color)
-        v(3mm)
+        #v(5mm)
+        #text(weight: "bold", size: 14pt, fill: primary_color)[#title]
+        #v(-2mm)
+        #line(length: 100%, stroke: 1.5pt + primary_color)
+        #v(3mm)
       ]
     }
     
